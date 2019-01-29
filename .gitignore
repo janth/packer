@@ -3,5 +3,6 @@
 *.bak*
 
 
+ami-builds/
 packer_cache/
 packerlog.txt

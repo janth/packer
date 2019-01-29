@@ -8,7 +8,7 @@
      "skip_export": "true",
 
      "iso_urls": [
-        "/home/mobaxterm/dw/CentOS-7-x86_64-Minimal-1810.iso",
+        "CentOS-7-x86_64-Minimal-1810.iso",
         "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1810.iso"
       ],
      "iso_checksum": "38d5d51d9d100fd73df031ffd6bd8b1297ce24660dc8c13a3b8b4534a4bd291c",
@@ -34,6 +34,7 @@
      "ssh_username": "centos",
      "ssh_password": "centos",
      "ssh_wait_timeout": "10000s",
+     "ssh_pty" : "true",
 
      "shutdown_command": "echo 'centos' | sudo -S shutdown -P now"
   }],
@@ -42,11 +43,7 @@
       {
          "type": "shell",
          "inline": [
-            "/usr/bin/sudo /usr/bin/yum install -y python34-pip @base bzip2 kernel-devel kernel-headers cloud-init epel-release curl wget rsync tmux vim-enhanced",
-            "source /etc/os-release ; export VERSION_ID ; /usr/bin/rpm -qa gpg-pubkey\\* --qf '%{name}-%{version}-%{release}-%{summary}\n' | /usr/bin/grep -q EPEL || /usr/bin/sudo /usr/bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$VERSION_ID",
-            "/usr/bin/sudo /bin/pip3 install --upgrade pip",
-            "/usr/bin/sudo /bin/pip3 install pydf",
-            "/usr/bin/sudo /usr/bin/yum install -y htop"
+            "/usr/bin/touch -v /.packer"
          ]
       },
       {
@@ -58,10 +55,10 @@
   ],
 
   "post-processors": [
-  [
-          {
+    [
+      {
         "type": "shell-local",
-        "inline": [ "/usr/local/bin/aws s3 cp consul-0.5.2.tar.gz s3://<s3 path>" ]
+        "inline": [ "echo /usr/local/bin/aws s3 cp consul-0.5.2.tar.gz s3://<s3 path>" ]
       }
     ]
   ]
