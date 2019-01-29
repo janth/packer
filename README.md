@@ -3,7 +3,7 @@
 HashiCorp Packer repo for creating CentOS 7 AIM's for Genesis
 
 ## Debug
-How to debug packer:
+How to debug packer: https://www.packer.io/docs/other/debugging.html
 
 PowerShell: 
 ```

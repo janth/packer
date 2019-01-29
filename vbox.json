@@ -31,7 +31,7 @@
         ["modifyvm", "{{.Name}}", "--description", "Created by packer for Genesis"]
      ],
 
-     "ssh_username": "centos",
+     "ssh_username": "root",
      "ssh_password": "centos",
      "ssh_wait_timeout": "10000s",
      "ssh_pty" : "true",
@@ -43,23 +43,15 @@
       {
          "type": "shell",
          "inline": [
-            "/usr/bin/touch -v /.packer"
+            "echo 'centos' | /usr/bin/sudo /usr/bin/touch /.packer_created"
          ]
       },
       {
          "type": "file",
-         "source": "/etc/genesis.txt",
-         "destination": "genesis.txt",
-         "direction": "download"
+         "source": "genesis.txt",
+         "destination": "/etc/genesis.txt",
+         "direction": "upload"
       }
-  ],
-
-  "post-processors": [
-    [
-      {
-        "type": "shell-local",
-        "inline": [ "echo /usr/local/bin/aws s3 cp consul-0.5.2.tar.gz s3://<s3 path>" ]
-      }
-    ]
   ]
+
 }
