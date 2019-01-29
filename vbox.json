@@ -1,0 +1,68 @@
+{
+  "builders": [{
+     "type": "virtualbox-iso",
+     "output_directory": "ami-builds",
+     "guest_os_type": "RedHat_64",
+     "guest_additions_mode": "disable",
+     "keep_registered": "true",
+     "skip_export": "true",
+
+     "iso_urls": [
+        "/home/mobaxterm/dw/CentOS-7-x86_64-Minimal-1810.iso",
+        "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1810.iso"
+      ],
+     "iso_checksum": "38d5d51d9d100fd73df031ffd6bd8b1297ce24660dc8c13a3b8b4534a4bd291c",
+     "iso_checksum_type": "sha256",
+
+     "boot_wait": "5s",
+     "http_directory": "packer_httpd",
+     "boot_command": [
+        "i<wait><tab> <bs><bs><bs><bs><bs><bs>text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg vga=773 keyboard=gb <wait2><enter>"
+      ],
+
+     "virtualbox_version_file": ".vbox_version",
+     "vm_name": "genesis-packer-centos-7_x86_64", 
+     "disk_size": 81920,
+     "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "512"],
+        ["modifyvm", "{{.Name}}", "--cpus", "1"],
+        ["modifyvm", "{{.Name}}", "--audio", "none"],
+        ["modifyvm", "{{.Name}}", "--usb", "off"],
+        ["modifyvm", "{{.Name}}", "--description", "Created by packer for Genesis"]
+     ],
+
+     "ssh_username": "centos",
+     "ssh_password": "centos",
+     "ssh_wait_timeout": "10000s",
+
+     "shutdown_command": "echo 'centos' | sudo -S shutdown -P now"
+  }],
+
+   "provisioners": [
+      {
+         "type": "shell",
+         "inline": [
+            "/usr/bin/sudo /usr/bin/yum install -y python34-pip @base bzip2 kernel-devel kernel-headers cloud-init epel-release curl wget rsync tmux vim-enhanced",
+            "source /etc/os-release ; export VERSION_ID ; /usr/bin/rpm -qa gpg-pubkey\\* --qf '%{name}-%{version}-%{release}-%{summary}\n' | /usr/bin/grep -q EPEL || /usr/bin/sudo /usr/bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$VERSION_ID",
+            "/usr/bin/sudo /bin/pip3 install --upgrade pip",
+            "/usr/bin/sudo /bin/pip3 install pydf",
+            "/usr/bin/sudo /usr/bin/yum install -y htop"
+         ]
+      },
+      {
+         "type": "file",
+         "source": "/etc/genesis.txt",
+         "destination": "genesis.txt",
+         "direction": "download"
+      }
+  ],
+
+  "post-processors": [
+  [
+          {
+        "type": "shell-local",
+        "inline": [ "/usr/local/bin/aws s3 cp consul-0.5.2.tar.gz s3://<s3 path>" ]
+      }
+    ]
+  ]
+}

@@ -1,0 +1,7 @@
+*.sw*
+*~
+*.bak*
+
+
+packer_cache/
+packerlog.txt
