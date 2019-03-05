@@ -1,4 +1,7 @@
 {
+  "variables": {
+     "CentOSiso": "{{ env `HOMEPATH` }}/Downloads/CentOS-7-x86_64-Minimal-1810.iso"
+  },
   "builders": [{
      "type": "virtualbox-iso",
      "output_directory": "ami-builds",
@@ -8,7 +11,7 @@
      "skip_export": "true",
 
      "iso_urls": [
-        "CentOS-7-x86_64-Minimal-1810.iso",
+        "../../../../Downloads/CentOS-7-x86_64-Minimal-1810.iso",
         "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1810.iso"
       ],
      "iso_checksum": "38d5d51d9d100fd73df031ffd6bd8b1297ce24660dc8c13a3b8b4534a4bd291c",
@@ -21,8 +24,8 @@
       ],
 
      "virtualbox_version_file": ".vbox_version",
-     "vm_name": "genesis-packer-centos-7_x86_64", 
-     "disk_size": 81920,
+     "vm_name": "genesis-packer-centos-7_x86_64",
+     "disk_size": 8192,
      "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "512"],
         ["modifyvm", "{{.Name}}", "--cpus", "1"],
@@ -51,6 +54,10 @@
          "source": "genesis.txt",
          "destination": "/etc/genesis.txt",
          "direction": "upload"
+      },
+      {
+         "type": "shell",
+         "script": "install-ansible.sh"
       }
   ]
 
