@@ -28,7 +28,6 @@ echo "yum: Installing git"
 /usr/bin/yum -y install git
 
 echo "pip3: Upgrading pip3"
-#/usr/bin/pip3 install pip --upgrade 
 /usr/bin/pip3.6 install pip --upgrade
 
 echo "pip3: installing ansible 2.7.2"

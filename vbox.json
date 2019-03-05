@@ -1,6 +1,10 @@
 {
   "variables": {
-     "CentOSiso": "{{ env `HOMEPATH` }}/Downloads/CentOS-7-x86_64-Minimal-1810.iso"
+     "CentOSiso": "{{ env `HOMEPATH` }}/Downloads/CentOS-7-x86_64-Minimal-1810.iso",
+
+     "region": "eu-west-2",
+     "aws_access_key": "",
+     "aws_secret_key": ""
   },
   "builders": [{
      "type": "virtualbox-iso",
@@ -28,6 +32,7 @@
      "disk_size": 8192,
      "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "512"],
+        ["modifyvm", "{{.Name}}", "--vram", "9"],
         ["modifyvm", "{{.Name}}", "--cpus", "1"],
         ["modifyvm", "{{.Name}}", "--audio", "none"],
         ["modifyvm", "{{.Name}}", "--usb", "off"],
@@ -58,6 +63,10 @@
       {
          "type": "shell",
          "script": "install-ansible.sh"
+      },
+      {
+         "type": "ansible",
+         "playbook_file": "./playbook.yml"
       }
   ]
 
