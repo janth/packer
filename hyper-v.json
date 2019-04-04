@@ -27,7 +27,7 @@
         "i<wait><tab> <bs><bs><bs><bs><bs><bs>text inst.ks=hd:fd0:/ks.cfg vga=773 keyboard=gb <wait2><enter>"
       ],
 
-     "vm_name": "genesis-packer-centos-7_x86_64",
+     "vm_name": "packer-centos-7_x86_64",
      "disk_size": 8192,
      "ram_size": 1024,
      "cpu": 1,
@@ -51,8 +51,8 @@
       },
       {
          "type": "file",
-         "source": "genesis.txt",
-         "destination": "/etc/genesis.txt",
+         "source": "janth.txt",
+         "destination": "/etc/janth.txt",
          "direction": "upload"
       },
       {

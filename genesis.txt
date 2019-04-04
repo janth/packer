@@ -1,4 +1,0 @@
-This image is created using HashiCorp Packer
-Exclusive use for Genesis Global Technology only
-
-

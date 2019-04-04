@@ -28,7 +28,7 @@
       ],
 
      "virtualbox_version_file": ".vbox_version",
-     "vm_name": "genesis-packer-centos-7_x86_64",
+     "vm_name": "packer-centos-7_x86_64",
      "disk_size": 8192,
      "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "512"],
@@ -36,7 +36,7 @@
         ["modifyvm", "{{.Name}}", "--cpus", "1"],
         ["modifyvm", "{{.Name}}", "--audio", "none"],
         ["modifyvm", "{{.Name}}", "--usb", "off"],
-        ["modifyvm", "{{.Name}}", "--description", "Created by packer for Genesis"]
+        ["modifyvm", "{{.Name}}", "--description", "Created by packer"]
      ],
 
      "ssh_username": "root",
@@ -56,8 +56,8 @@
       },
       {
          "type": "file",
-         "source": "genesis.txt",
-         "destination": "/etc/genesis.txt",
+         "source": "janth.txt",
+         "destination": "/etc/janth.txt",
          "direction": "upload"
       },
       {
